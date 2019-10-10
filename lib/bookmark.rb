@@ -56,7 +56,7 @@ class Bookmark
     Database.all_records(table: TABLE)
   end
 
-  def self.sql_get_record(id: id)
+  def self.sql_get_record(id:)
     Database.get_record(table: TABLE, where_id: id)
   end
 

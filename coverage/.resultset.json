@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/kevin/projects/makers/bookmark_manager/spec/bookmark_spec.rb": [
+      "/Users/student/Google Drive/Projects/bookmark_manager/spec/bookmark_spec.rb": [
         1,
         1,
         null,
@@ -102,7 +102,7 @@
         null,
         null
       ],
-      "/Users/kevin/projects/makers/bookmark_manager/spec/database_helpers.rb": [
+      "/Users/student/Google Drive/Projects/bookmark_manager/spec/database_helpers.rb": [
         1,
         null,
         1,
@@ -111,7 +111,7 @@
         1,
         null
       ],
-      "/Users/kevin/projects/makers/bookmark_manager/spec/features/adding_bookmarks_spec.rb": [
+      "/Users/student/Google Drive/Projects/bookmark_manager/spec/features/adding_bookmarks_spec.rb": [
         1,
         null,
         1,
@@ -125,7 +125,7 @@
         null,
         null
       ],
-      "/Users/kevin/projects/makers/bookmark_manager/spec/features/deleting _bookmarks_spec.rb": [
+      "/Users/student/Google Drive/Projects/bookmark_manager/spec/features/deleting _bookmarks_spec.rb": [
         1,
         null,
         1,
@@ -142,7 +142,7 @@
         null,
         null
       ],
-      "/Users/kevin/projects/makers/bookmark_manager/spec/features/updating_bookmarks_spec.rb": [
+      "/Users/student/Google Drive/Projects/bookmark_manager/spec/features/updating_bookmarks_spec.rb": [
         1,
         null,
         1,
@@ -162,7 +162,7 @@
         null,
         null
       ],
-      "/Users/kevin/projects/makers/bookmark_manager/spec/features/url_validation_spec.rb": [
+      "/Users/student/Google Drive/Projects/bookmark_manager/spec/features/url_validation_spec.rb": [
         1,
         1,
         1,
@@ -176,7 +176,7 @@
         null,
         null
       ],
-      "/Users/kevin/projects/makers/bookmark_manager/spec/features/viewing_bookmarks_spec.rb": [
+      "/Users/student/Google Drive/Projects/bookmark_manager/spec/features/viewing_bookmarks_spec.rb": [
         1,
         null,
         1,
@@ -195,6 +195,6 @@
         null
       ]
     },
-    "timestamp": 1570722665
+    "timestamp": 1570729491
   }
 }
