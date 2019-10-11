@@ -26,7 +26,7 @@ require 'rubocop'
 require 'simplecov'
 require 'simplecov-console'
 
-Database.setup(database: 'bookmark_manager_test')
+DatabaseConnection.setup(database: 'bookmark_manager')
 SimpleCov.formatter = SimpleCov::Formatter::Console
 SimpleCov.start
 

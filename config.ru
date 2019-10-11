@@ -1,9 +1,6 @@
+# frozen_string_literal: true
+
 require_relative './app'
 
-if ENV['ENVIRONMENT'] = 'test'
-  Database.setup(database: 'bookmark_manager_test')
-else
-  Database.setup(database: 'bookmark_manager')
-end
-
+Database.setup(database: 'bookmark_manager')
 run BookmarkManager

@@ -1,18 +1,14 @@
 require 'pg'
 
-class Database
+# A basic database engine
+class DatabaseConnection
   TEST_SUFFIX = '_test'
   
   def self.setup(database:)
     @db_name = database
+    @db_name += TEST_SUFFIX if test?
   end
 
-  # def initialize(database:)
-  #   @db_name = database
-  #   @db_name += TEST_SUFFIX if test?
-  #   @connection = PG.connect(dbname: @db_name)
-  # end
-  
   def self.all_records(table:)
     sql = "SELECT * FROM #{table};"
     data = run_sql(sql: sql)
@@ -46,7 +42,8 @@ class Database
     @connection.exec(sql)
   end
 
-  # def self.test?
-  #   ENV['ENVIRONMENT'] == 'test'
-  # end
+  # Method requires the text enviromant will be called 'test'
+  def self.test?
+    ENV['ENVIRONMENT'].downcase == 'test'
+  end
 end
