@@ -1,84 +1,94 @@
+# frozen_string_literal: true
+
+require_relative 'record'
 require_relative 'database_connection'
 
-class Bookmark
-  DEFAULT_TABLE = 'bookmarks'
+class Bookmark < Record
+  DATABASE = 'bookmark_manager'
+  TABLE = 'bookmarks'
+  PRIMARY_KEY_COLUMN = 'id'
+  COLUMNS = 'url, title'
 
   # class methods
   def self.all
-    all_data = self.sql_all_records
-    all_data.map do |record| 
-      self.new(
+    all_data = DatabaseConnection.all_records(database: DATABASE, table: TABLE )
+    all_data.map do |record|
+      new(
         id: record['id'],
         url: record['url'],
-        title: record['title'],) 
+        title: record['title']
+      )
     end
   end
-  
+
+  def self.create_db_record(url:, title:)
+    db_response = DatabaseConnection.add(
+      database: DATABASE,
+      table: TABLE,
+      columns: COLUMNS,
+      values: "'#{url}', '#{title}'"
+    )
+  end
+
   def self.create(url:, title:)
-    db_response = self.sql_add_record(url: url, title: title)
-    self.new(
-      id: db_response[0]['id'], 
-      url: db_response[0]['url'], 
-      title: db_response[0]['title'])
+    db_response = create_db_record(url: url, title: title)
+    new(
+      id: db_response[0]['id'],
+      url: db_response[0]['url'],
+      title: db_response[0]['title']
+    )
+  end
+  
+  def self.edit(id: , url: nil, title: nil )
+    record = new(
+      id: id,
+      url: url,
+      title: title
+    )
+    record.update_url unless id.nil?
+    record.update_title unless id.nil?
   end
   
   def self.delete(id:)
-    self.sql_delete_record(id: id)
+    record = new(id: id)
+    DatabaseConnection.delete(record: record)
   end
   
-  def self.edit(id:, title: nil, url: nil)
-    return false if title.nil? && url.nil?
-
-    bookmark  = self.get_bookmark(id: id)
-    return false if title == bookmark.title && url = bookmark.url
-
-    self.sql_edit_record(id: id, title: title, url: url)
+  def self.get(id:)
+    db_response = DatabaseConnection.get(
+      database: DATABASE,
+      table: TABLE, 
+      key: id
+    )
+    new(
+      id: db_response[0]['id'],
+      url: db_response[0]['url'],
+      title: db_response[0]['title']
+    )
+  end
+        
+  def update_url
+    @columns = "url"
+    @values = "'#{@url}'"
+    DatabaseConnection.update(record: self)
   end
 
-  private
-
-  def self.get_bookmark(id:)
-    record = self.sql_get_record(id: id)
-    bookmark = self.new(id: record['id'], title: record['title'], url: record['url'])
+  def update_title
+    @columns = "title"
+    @values = "'#{@title}'"
+    DatabaseConnection.update(record: self)
   end
-
-  def self.sql_edit_record(id:, url:, title:)
-    DatabaseConnection.edit_record(
-      table: DEFAULT_TABLE, 
-      where_id: id, 
-      title: title, 
-      url: url)
-  end
-
-  def self.sql_all_records
-    DatabaseConnection.all_records(table: DEFAULT_TABLE)
-  end
-
-  def self.sql_get_record(id:)
-    DatabaseConnection.get_record(table: DEFAULT_TABLE, where_id: id)
-  end
-
-  def self.sql_add_record(url:, title:)
-    DatabaseConnection.add_record(
-      table: DEFAULT_TABLE, 
-      in_columns: 'url, title', 
-      add_values: "'#{url}', '#{title}'")
-  end
-
-  def self.sql_delete_record(id:)
-    DatabaseConnection.delete_record(
-      table: DEFAULT_TABLE, 
-      where_column: 'id' , 
-      contains_value: id)
-  end
-
-  # Instance Methods
 
   public
 
-  attr_reader :id, :url, :title
+  attr_reader :id, :url, :title, :database, :table, :key_column, :primary_key, :columns, :values
 
-  def initialize(id:, url:, title:)
+  def initialize(id:, url: nil, title: nil)
+    @database = DATABASE
+    @table = TABLE
+    @key_column = PRIMARY_KEY_COLUMN
+    @columns = COLUMNS
+    @primary_key = id
     @id = id
     @url = url
     @title = title
